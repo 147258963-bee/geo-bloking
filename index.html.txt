@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Blocking | Software & Soluciones Digitales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0033; /* Azul profundo del logo */
+            --accent-gradient: linear-gradient(45deg, #ff8c00, #e91e63); /* Naranja a Rosa */
+            --cyan: #00e5ff;
+            --text-light: #ffffff;
+            --whatsapp-green: #25d366;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+        }
+
+        /* Cabecera con Logo */
+        header {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-img { height: 50px; border-radius: 5px; }
+        .brand-name { font-weight: bold; color: var(--cyan); font-size: 1.4rem; }
+
+        /* Sección Hero */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, #1a0066 0%, #0a0033 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Cuadrícula de Servicios */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 50px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+        }
+
+        .card i { font-size: 3rem; color: var(--cyan); margin-bottom: 20px; display: block; }
+
+        /* Chatbot Interactivo */
+        .chatbot-container {
+            max-width: 450px;
+            margin: 40px auto;
+            background: #15004d;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        #chat-display {
+            height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .bubble { padding: 12px 18px; border-radius: 18px; font-size: 0.95rem; line-height: 1.4; max-width: 85%; }
+        .bubble.bot { background: var(--accent-gradient); align-self: flex-start; }
+        .bubble.user { border: 1px solid var(--cyan); align-self: flex-end; }
+
+        .chat-options { display: flex; flex-direction: column; gap: 10px; }
+        .chat-btn {
+            background: transparent; border: 1px solid var(--cyan); color: var(--cyan);
+            padding: 12px; border-radius: 12px; cursor: pointer; text-align: left;
+        }
+        .chat-btn:hover { background: var(--cyan); color: var(--bg-dark); }
+
+        /* Formulario de Contacto Directo */
+        .contact-section {
+            padding: 60px 5%;
+            background: rgba(0,0,0,0.2);
+            max-width: 600px;
+            margin: 40px auto;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-form { display: flex; flex-direction: column; gap: 15px; }
+        .contact-form input, .contact-form textarea {
+            padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05); color: white; font-size: 1rem;
+        }
+
+        .btn-submit {
+            background: var(--accent-gradient); color: white; border: none;
+            padding: 18px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 1.1rem;
+        }
+
+        /* WhatsApp Flotante */
+        .whatsapp-btn {
+            position: fixed; bottom: 30px; right: 30px;
+            background-color: var(--whatsapp-green); color: white;
+            width: 60px; height: 60px; border-radius: 50px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; text-decoration: none; z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+        .whatsapp-btn:hover { transform: scale(1.1); }
+
+        /* Footer */
+        footer { padding: 50px 20px; background: #05001a; text-align: center; }
+        .social-links { display: flex; justify-content: center; gap: 30px; margin-top: 20px; }
+        .social-links a { color: white; font-size: 2rem; transition: 0.3s; }
+        .social-links a:hover { color: var(--cyan); }
+    </style>
+</head>
+<body>
+
+    <a href="https://wa.me/56949818809?text=Hola%20Geo%20Blocking,%20necesito%20información%20sobre%20sus%20servicios." class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Geo Blocking Logo" class="logo-img">
+            <span class="brand-name">GEO BLOCKING</span>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Geo Blocking Software</h1>
+        <p>Soluciones Digitales e Inteligencia Artificial 🚀</p>
+    </section>
+
+    <section class="services-grid">
+        <div class="card"><i class="fas fa-rocket"></i><h3>Landing Pages</h3><p>Páginas web de alta velocidad y conversión.</p></div>
+        <div class="card"><i class="fas fa-mobile-alt"></i><h3>Apps Móviles</h3><p>Desarrollo nativo iOS y Android.</p></div>
+        <div class="card"><i class="fas fa-robot"></i><h3>Automatización</h3><p>Chatbots y sistemas RPA inteligentes.</p></div>
+        <div class="card"><i class="fas fa-fingerprint"></i><h3>Biometría</h3><p>Seguridad y acceso biométrico avanzado.</p></div>
+    </section>
+
+    <div class="chatbot-container">
+        <div id="chat-display">
+            <div class="bubble bot">¡Hola! Soy el asistente de Geo Blocking. ¿Qué solución buscas hoy? 🤖</div>
+        </div>
+        <div class="chat-options">
+            <button class="chat-btn" onclick="hablar('🎨 Landing Pages')">🎨 Landing Pages</button>
+            <button class="chat-btn" onclick="hablar('💳 Pagos Webpay')">💳 Integrar Webpay</button>
+            <button class="chat-btn" onclick="hablar('🔐 Biometría')">🔐 Seguridad Biométrica</button>
+        </div>
+    </div>
+
+    <section class="contact-section">
+        <h2 style="text-align: center; margin-bottom: 25px;">Contáctanos Directo 📩</h2>
+        <form action="https://formspree.io/f/geobloking@gmail.com" method="POST" class="contact-form">
+            <input type="text" name="nombre" placeholder="Nombre Completo" required>
+            <input type="email" name="email" placeholder="Correo Electrónico" required>
+            <textarea name="mensaje" rows="4" placeholder="Cuéntanos tu idea o proyecto..." required></textarea>
+            <button type="submit" class="btn-submit">Enviar Solicitud</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>geobloking@gmail.com | +56 9 4981 8809</p>
+        <div class="social-links">
+            <a href="https://instagram.com/geobloking" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/56949818809" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 30px;">© 2024 Geo Blocking - Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const respuestas = {
+            "🎨 Landing Pages": "Creamos Landing Pages optimizadas para Google y redes sociales. 🚀",
+            "💳 Pagos Webpay": "Integramos carritos de compra con pagos automáticos y seguros. 💳",
+            "🔐 Biometría": "Implementamos reconocimiento facial y dactilar para tus apps. 🔐"
+        };
+
+        function hablar(msg) {
+            const display = document.getElementById('chat-display');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bubble user';
+            userMsg.innerText = msg;
+            display.appendChild(userMsg);
+            display.scrollTop = display.scrollHeight;
+
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'bubble bot';
+                botMsg.innerText = respuestas[msg] || "Estamos procesando tu consulta... ⏳";
+                display.appendChild(botMsg);
+                display.scrollTop = display.scrollHeight;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
