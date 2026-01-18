@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoBlocking | Escáner Tecnológico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #05001a;
+            --accent-cyan: #00e5ff;
+            --logo-pink: #ff3366;
+            --logo-orange: #ff9900;
+            --laser-color: rgba(0, 229, 255, 0.5);
+            --grad-logo: linear-gradient(135deg, #ff3366, #ff9900);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Efecto Escaneo Láser --- */
+        .laser-line {
+            position: fixed;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 20px 5px var(--accent-cyan);
+            z-index: 9999;
+            pointer-events: none;
+            animation: scan 4s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes scan {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        /* --- Animación de Brillo al "Detectar" el Láser --- */
+        .tech-pill, .card i, .card h3 {
+            animation: detect 4s linear infinite;
+        }
+
+        @keyframes detect {
+            0%, 45%, 55%, 100% { filter: brightness(1); transform: scale(1); }
+            50% { filter: brightness(2) drop-shadow(0 0 10px var(--accent-cyan)); transform: scale(1.1); }
+        }
+
+        /* --- Estructura Futurista --- */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #100035 0%, #05001a 100%);
+        }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(to right, var(--accent-cyan), var(--logo-pink), var(--logo-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 15px;
+            margin: 0;
+        }
+
+        /* --- Grid de Servicios --- */
+        .container { padding: 80px 10%; }
+        .grid-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card i { font-size: 3rem; color: var(--accent-cyan); margin-bottom: 20px; }
+
+        /* --- Landing Page Especial --- */
+        .landing-box {
+            background: linear-gradient(45deg, rgba(255, 51, 102, 0.1), rgba(0, 229, 255, 0.1));
+            border: 2px solid var(--accent-cyan);
+            border-radius: 30px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 50px;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+        }
+
+        /* --- Tech Pills --- */
+        .tech-pill {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            border: 1px solid var(--logo-pink);
+            font-weight: bold;
+        }
+
+        /* --- Botón WhatsApp --- */
+        .wa-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            z-index: 1000;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5);
+        }
+
+        /* --- Formulario --- */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid #444;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .btn-send {
+            background: var(--grad-logo);
+            border: none;
+            padding: 15px;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            background: #02000c;
+            padding: 60px 10%;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .social-icons a { color: white; font-size: 2rem; margin: 0 15px; transition: 0.3s; }
+        .social-icons a:hover { color: var(--accent-cyan); }
+    </style>
+</head>
+<body>
+
+    <div class="laser-line"></div>
+    <div id="particles-js"></div>
+
+    <header>
+        <h1 class="hero-title">GEOBLOCKING</h1>
+        <p style="color: var(--accent-cyan); letter-spacing: 5px;">SISTEMA DE ESCANEO ACTIVO...</p>
+    </header>
+
+    <div class="container">
+        <h2 style="text-align: center;">SERVICIOS DETECTADOS 📡</h2>
+        <div class="grid-services">
+            <div class="card">
+                <i class="fas fa-fingerprint"></i>
+                <h3>BIOMETRÍA 🧬</h3>
+                <p>Identidad digital y seguridad avanzada.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-robot"></i>
+                <h3>CHATBOTS 🤖</h3>
+                <p>Automatización de respuestas inteligentes.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>E-COMMERCE 🛒</h3>
+                <p>Webpay y carritos de alta velocidad 💳.</p>
+            </div>
+        </div>
+
+        <div class="landing-box">
+            <h2 style="color: var(--accent-cyan);">🚀 LANDING PAGES FUTURISTAS</h2>
+            <p>Diseñamos páginas de aterrizaje con efectos visuales que no existen en la competencia.</p>
+            <span>✨ ÚNICO | ⚡ VELOZ | 🤖 INTELIGENTE</span>
+        </div>
+    </div>
+
+    <div class="container" style="text-align: center;">
+        <h2>LENGUAJES & NÚCLEO 💻</h2>
+        <div class="tech-list">
+            <span class="tech-pill">Python 🐍</span>
+            <span class="tech-pill">Java ☕</span>
+            <span class="tech-pill">C++ ⚙️</span>
+            <span class="tech-pill">Kotlin (Android) 🤖</span>
+            <span class="tech-pill">HTML 🌐</span>
+            <span class="tech-pill">CSS 🎨</span>
+            <span class="tech-pill">JavaScript ✨</span>
+            <span class="tech-pill">MySQL 🐬</span>
+            <span class="tech-pill">MongoDB 🍃</span>
+            <span class="tech-pill">AWS (RDS, IAM) ☁️</span>
+            <span class="tech-pill">Android Studio 📱</span>
+            <span class="tech-pill">Git 🌲</span>
+            <span class="tech-pill">Power BI 📊</span>
+            <span class="tech-pill">Pentaho ETL 🔄</span>
+            <span class="tech-pill">UML 📐</span>
+            <span class="tech-pill">Excel 📈</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 style="text-align: center;">TERMINAL DE CONTACTO ✉️</h2>
+        <div class="contact-form">
+            <form action="https://formsubmit.co/geobloking@gmail.com" method="POST">
+                <input type="text" name="name" placeholder="USUARIO / EMPRESA" required>
+                <input type="email" name="email" placeholder="EMAIL DE ENLACE" required>
+                <textarea name="message" rows="5" placeholder="MENSAJE ENCRIPTADO..." required></textarea>
+                <button type="submit" class="btn-send">ENVIAR TRANSMISIÓN 🚀</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/56949818809" class="wa-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <h3 style="letter-spacing: 5px; color: var(--accent-cyan);">GEOBLOCKING</h3>
+        <p>geobloking@gmail.com | @geobloking | +56949818809</p>
+        <div class="social-icons">
+            <a href="mailto:geobloking@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="https://instagram.com/geobloking" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/56949818809" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.7rem; opacity: 0.4;">SISTEMA OPERATIVO v2.0 - © 2024</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 60 },
+                "color": { "value": "#ff3366" },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00e5ff", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 1.5 }
+            }
+        });
+    </script>
+</body>
+</html>
