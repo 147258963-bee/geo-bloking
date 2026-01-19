@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoBlocking | Futuro Tecnológico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #05001a;
+            --accent-cyan: #00e5ff;
+            --logo-pink: #ff3366;
+            --logo-orange: #ff9900;
+            --grad-logo: linear-gradient(135deg, #ff3366, #ff9900);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- CONTENEDOR DE PARTÍCULAS --- */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Detrás de todo */
+            background: radial-gradient(circle at center, #0a002e 0%, #05001a 100%);
+        }
+
+        /* --- LÁSERES LATERALES --- */
+        .static-laser {
+            position: fixed;
+            top: 0;
+            width: 3px;
+            height: 100vh;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 15px var(--accent-cyan);
+            z-index: 9998;
+            opacity: 0.5;
+        }
+        .laser-left { left: 0; }
+        .laser-right { right: 0; }
+
+        /* --- ESCÁNER HORIZONTAL --- */
+        .laser-scan {
+            position: fixed;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            z-index: 9999;
+            pointer-events: none;
+            animation: scan-move 4s linear infinite;
+        }
+
+        @keyframes scan-move {
+            0% { top: -5%; background: var(--accent-cyan); box-shadow: 0 0 15px var(--accent-cyan); }
+            50% { background: var(--logo-pink); box-shadow: 0 0 15px var(--logo-pink); }
+            100% { top: 105%; background: var(--logo-orange); box-shadow: 0 0 15px var(--logo-orange); }
+        }
+
+        /* --- HEADER Y TÍTULO CON BRILLO --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 12vw, 6rem);
+            font-weight: 900;
+            background: linear-gradient(to right, var(--accent-cyan), var(--logo-pink), var(--logo-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: clamp(2px, 2vw, 15px);
+            margin: 0;
+            text-transform: uppercase;
+            /* Animación de brillo */
+            animation: glow-pulse 3s infinite alternate;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        .hero-title:hover {
+            filter: drop-shadow(0 0 25px var(--accent-cyan));
+            transform: scale(1.05);
+        }
+
+        @keyframes glow-pulse {
+            from { filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.2)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 51, 102, 0.6)); }
+        }
+
+        .hero-subtitle {
+            color: var(--accent-cyan);
+            letter-spacing: 5px;
+            margin-top: 15px;
+            font-size: clamp(0.7rem, 3vw, 1.2rem);
+            opacity: 0.8;
+        }
+
+        /* --- CONTENEDORES --- */
+        .container { padding: 60px 10%; position: relative; }
+        
+        .grid-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.1);
+        }
+
+        .card i { font-size: 2.5rem; color: var(--accent-cyan); margin-bottom: 15px; }
+
+        .landing-box {
+            background: linear-gradient(45deg, rgba(255, 51, 102, 0.05), rgba(0, 229, 255, 0.05));
+            border: 1px solid var(--accent-cyan);
+            border-radius: 25px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        /* --- TECH PILLS --- */
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tech-pill {
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            border: 1px solid var(--logo-pink);
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        /* --- FORMULARIO --- */
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.02);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid #333;
+            color: white;
+            border-radius: 8px;
+        }
+
+        .btn-send {
+            background: var(--grad-logo);
+            border: none;
+            padding: 15px;
+            width: 100%;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- WHATSAPP --- */
+        .wa-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            z-index: 10000;
+            text-decoration: none;
+        }
+
+        footer {
+            padding: 40px 10%;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+            font-size: 0.9rem;
+        }
+
+        /* --- AJUSTES MÓVIL (CENTRADO TOTAL) --- */
+        @media (max-width: 600px) {
+            .hero-title {
+                letter-spacing: 2px; /* Centrado perfecto sin desborde */
+            }
+            .hero-subtitle { letter-spacing: 2px; }
+            .container { padding: 40px 5%; }
+            .static-laser { width: 1px; opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <div class="static-laser laser-left"></div>
+    <div class="static-laser laser-right"></div>
+    <div class="laser-scan"></div>
+
+    <header>
+        <h1 class="hero-title">GEOBLOCKING</h1>
+        <p class="hero-subtitle">SOFTWARE ARCHITECTURE & AI</p>
+    </header>
+
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 30px;">SISTEMAS DISPONIBLES 🦾</h2>
+        <div class="grid-services">
+            <div class="card">
+                <i class="fas fa-fingerprint"></i>
+                <h3>BIOMETRÍA</h3>
+                <p>Seguridad avanzada por reconocimiento facial y dactilar.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-robot"></i>
+                <h3>CHATBOTS</h3>
+                <p>IA para automatización de respuestas inmediatas.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>E-COMMERCE</h3>
+                <p>Ventas online con integración Webpay profesional.</p>
+            </div>
+        </div>
+
+        <div class="landing-box">
+            <h2 style="color: var(--accent-cyan);">🚀 LANDING PAGES</h2>
+            <p>Diseños futuristas optimizados para alta conversión en móviles.</p>
+        </div>
+    </div>
+
+    <div class="container" style="text-align: center;">
+        <h2 style="margin-bottom: 30px;">CORE TECNOLÓGICO 💻</h2>
+        <div class="tech-list">
+            <span class="tech-pill">Python 🐍</span>
+            <span class="tech-pill">Kotlin 🤖</span>
+            <span class="tech-pill">JavaScript ✨</span>
+            <span class="tech-pill">AWS ☁️</span>
+            <span class="tech-pill">MySQL 🐬</span>
+            <span class="tech-pill">Android Studio 📱</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 30px;">CONTACTO ✉️</h2>
+        <div class="contact-form">
+            <form action="https://formsubmit.co/geobloking@gmail.com" method="POST">
+                <input type="text" name="name" placeholder="NOMBRE / EMPRESA" required>
+                <input type="email" name="email" placeholder="EMAIL" required>
+                <textarea name="message" rows="4" placeholder="¿TU VISIÓN?" required></textarea>
+                <button type="submit" class="btn-send">TRANSMITIR 🚀</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="https://wa.me/56949818809" class="wa-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <p>© 2024 GEOBLOCKING | geobloking@gmail.com</p>
+        <div style="font-size: 1.5rem; margin-top: 10px;">
+            <a href="#" style="color:white; margin:0 10px;"><i class="fab fa-instagram"></i></a>
+            <a href="#" style="color:white; margin:0 10px;"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00e5ff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 2, "random": true },
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 150, 
+                    "color": "#ff3366", 
+                    "opacity": 0.3, 
+                    "width": 1 
+                },
+                "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" }
+                },
+                "modes": {
+                    "grab": { "distance": 200, "line_linked": { "opacity": 0.8 } }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
