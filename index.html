@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Blocking | Software & Automation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0f0030;
+            --primary-orange: #ff8c00;
+            --primary-magenta: #ff0055;
+            --accent-cyan: #00f2ff;
+            --text-light: #e0e0e0;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Canvas para Partículas */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Header & Hero */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1a0050 0%, #0f0030 100%);
+        }
+
+        .phone-container {
+            width: 280px;
+            height: 500px;
+            border: 8px solid #333;
+            border-radius: 40px;
+            position: relative;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 50px rgba(255, 0, 85, 0.3);
+            overflow: hidden;
+            animation: slideInDown 1.5s ease-out;
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-1000px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--primary-orange), var(--primary-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 20px;
+        }
+
+        /* Secciones */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            color: var(--accent-cyan);
+            margin-bottom: 50px;
+        }
+
+        .grid-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 140, 0, 0.2);
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-magenta);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .card i { font-size: 3rem; margin-bottom: 15px; display: block; }
+
+        /* Stack Tecnológico */
+        .stack-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .tech-badge {
+            background: linear-gradient(90deg, #333, #111);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid var(--accent-cyan);
+            font-size: 0.9rem;
+        }
+
+        /* Formulario */
+        .contact-form {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(20, 20, 20, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--primary-orange), var(--primary-magenta));
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+
+        /* WhatsApp Flotante */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+        footer {
+            background: #050015;
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid var(--primary-magenta);
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <header>
+        <div class="phone-container">
+            <div class="hero-title">GEO<br>BLOCKING<br>🚀</div>
+        </div>
+        <p style="margin-top: 20px; font-size: 1.2rem;">Automatización & Software de Siguiente Generación</p>
+    </header>
+
+    <section id="servicios">
+        <h2>Nuestras Soluciones 🛠️</h2>
+        <div class="grid-services">
+            <div class="card"><span>📱</span><h3>Apps Móviles</h3><p>Desarrollo nativo e híbrido con Kotlin y más.</p></div>
+            <div class="card"><span>💳</span><h3>Pagos Directos</h3><p>Integración experta con Webpay y E-commerce.</p></div>
+            <div class="card"><span>🤖</span><h3>Chatbots 24/7</h3><p>Automatización inteligente para tu negocio.</p></div>
+            <div class="card"><span>👤</span><h3>Biometría Facial</h3><p>Seguridad de vanguardia con IA.</p></div>
+            <div class="card"><span>🌐</span><h3>Landing Pages</h3><p>Diseño profesional con el mejor stack actual.</p></div>
+            <div class="card"><span>📊</span><h3>Data & BI</h3><p>Power BI, Pentaho y procesos ETL complejos.</p></div>
+        </div>
+    </section>
+
+    <section id="stack">
+        <h2>Stack Tecnológico 💻</h2>
+        <div class="stack-list">
+            <span class="tech-badge">🐍 Python</span>
+            <span class="tech-badge">☕ Java</span>
+            <span class="tech-badge">⚙️ C++</span>
+            <span class="tech-badge">🤖 Kotlin</span>
+            <span class="tech-badge">🌐 HTML5 / CSS3 / JS</span>
+            <span class="tech-badge">🗄️ MySQL</span>
+            <span class="tech-badge">🍃 MongoDB</span>
+            <span class="tech-badge">☁️ AWS (RDS, IAM)</span>
+            <span class="tech-badge">🛠️ Android Studio</span>
+            <span class="tech-badge">🐙 Git</span>
+            <span class="tech-badge">📈 Power BI</span>
+            <span class="tech-badge">📐 UML</span>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <h2>Contáctanos ✉️</h2>
+        <form class="contact-form" action="https://formsubmit.co/geobloking@gmail.com" method="POST">
+            <input type="text" name="name" placeholder="Tu Nombre" required>
+            <input type="email" name="email" placeholder="Tu Correo" required>
+            <textarea name="message" rows="5" placeholder="¿En qué podemos ayudarte?" required></textarea>
+            <button type="submit">Enviar Propuesta</button>
+        </form>
+    </section>
+
+    <footer>
+        <p><strong>GEO BLOCKING</strong> - 2024</p>
+        <p>📧 geobloking@gmail.com | 📞 +56949818809</p>
+        <div class="social-links">
+            <a href="https://instagram.com/geobloking" target="_blank">📸 Instagram</a>
+            <a href="mailto:geobloking@gmail.com">📩 Email</a>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/56949818809" class="whatsapp-btn" target="_blank">💬</a>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": "#ff0055" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ff8c00",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": { "enable": true, "speed": 2 }
+            }
+        });
+    </script>
+</body>
+</html>
