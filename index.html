@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geo Blocking | Biometría & Automatización Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #05001a;
+            --primary-orange: #ff8c00;
+            --primary-magenta: #ff0055;
+            --accent-cyan: #00f2ff;
+            --success-green: #25d366;
+            --text-light: #ffffff;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; top: 0; }
+
+        /* Hero */
+        header {
+            height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            background: radial-gradient(circle at center, #1a0050 0%, #05001a 100%);
+        }
+
+        .phone-mockup {
+            width: 260px; height: 500px;
+            border: 10px solid #222; border-radius: 40px;
+            background: #000; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 40px var(--primary-magenta);
+            animation: dropIn 1.2s ease-out;
+        }
+
+        @keyframes dropIn { from { transform: translateY(-1000px); } to { transform: translateY(0); } }
+
+        /* Cúpula Biométrica */
+        .biometric-section { text-align: center; padding: 60px 20px; }
+        
+        #biometric-ui {
+            position: relative; width: 320px; height: 320px;
+            margin: 30px auto; border-radius: 50%;
+            border: 4px solid var(--accent-cyan);
+            overflow: hidden; background: #000;
+            box-shadow: 0 0 30px var(--accent-cyan);
+        }
+
+        #webcam { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+
+        .scan-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, rgba(0, 242, 255, 0.1) 2px, transparent 4px);
+            display: none; z-index: 2;
+        }
+
+        .scan-line {
+            position: absolute; width: 100%; height: 3px;
+            background: var(--accent-cyan); box-shadow: 0 0 20px var(--accent-cyan);
+            top: 0; animation: scanLoop 2s linear infinite; display: none; z-index: 3;
+        }
+
+        .access-status {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            z-index: 10; font-family: 'Orbitron'; font-size: 1.2rem;
+            display: none; text-shadow: 0 0 10px #000;
+        }
+
+        @keyframes scanLoop { 0% { top: 0; } 100% { top: 100%; } }
+
+        /* WhatsApp Flotante */
+        .whatsapp-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--success-green); width: 65px; height: 65px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); z-index: 1000;
+            animation: pulseWs 2s infinite; text-decoration: none; font-size: 30px;
+        }
+
+        @keyframes pulseWs { 
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Estilos Comunes */
+        section { padding: 80px 20px; max-width: 1100px; margin: auto; }
+        h2 { font-family: 'Orbitron'; color: var(--accent-cyan); text-align: center; }
+        .btn-tech { 
+            background: linear-gradient(45deg, var(--primary-orange), var(--primary-magenta));
+            color: white; border: none; padding: 15px 40px; border-radius: 30px;
+            font-family: 'Orbitron'; cursor: pointer; transition: 0.3s;
+        }
+        .btn-tech:hover { letter-spacing: 2px; box-shadow: 0 0 20px var(--primary-magenta); }
+
+        footer { text-align: center; padding: 50px; border-top: 1px solid var(--primary-magenta); margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<header>
+    <div class="phone-mockup">
+        <div style="text-align:center;">
+            <h2 style="margin:0; font-size:1.5rem; background: linear-gradient(45deg, var(--primary-orange), var(--primary-magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">GEO<br>BLOCKING</h2>
+            <p style="font-size:0.6rem; color:var(--accent-cyan);">SECURE ACCESS</p>
+        </div>
+    </div>
+</header>
+
+<section class="biometric-section">
+    <h2>Módulo de Reconocimiento 👤</h2>
+    <div id="biometric-ui">
+        <video id="webcam" autoplay playsinline></video>
+        <div class="scan-overlay" id="overlay"></div>
+        <div class="scan-line" id="line"></div>
+        <div class="access-status" id="status"></div>
+    </div>
+    <button class="btn-tech" id="btn-scan" onclick="runBiometricScan()">INICIAR ESCANEO FACIAL</button>
+</section>
+
+<footer id="contacto">
+    <p><strong>GEO BLOCKING</strong> | geobloking@gmail.com</p>
+    <p>📱 +56949818809 | 📍 Santiago, Chile</p>
+</footer>
+
+<a href="https://wa.me/56949818809" class="whatsapp-float" target="_blank">🟢</a>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // Partículas
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 80 },
+            "color": { "value": "#ff0055" },
+            "line_linked": { "enable": true, "color": "#00f2ff", "opacity": 0.2 },
+            "move": { "enable": true, "speed": 1 }
+        }
+    });
+
+    // Lógica Biométrica
+    async function runBiometricScan() {
+        const video = document.getElementById('webcam');
+        const overlay = document.getElementById('overlay');
+        const line = document.getElementById('line');
+        const status = document.getElementById('status');
+        const btn = document.getElementById('btn-scan');
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            video.srcObject = stream;
+            
+            // Iniciar Efectos
+            overlay.style.display = 'block';
+            line.style.display = 'block';
+            btn.disabled = true;
+            btn.innerText = "ANALIZANDO...";
+            status.style.display = 'block';
+            status.style.color = 'var(--accent-cyan)';
+            status.innerText = "BUSCANDO ROSTRO...";
+
+            // Simulación de pasos
+            setTimeout(() => { status.innerText = "PUNTOS CLAVE: OK"; }, 1500);
+            setTimeout(() => { status.innerText = "VERIFICANDO IDENTIDAD..."; }, 3000);
+
+            // ACCESO CONCEDIDO
+            setTimeout(() => {
+                line.style.display = 'none';
+                status.innerText = "ACCESO CONCEDIDO ✔";
+                status.style.color = var(--success-green);
+                document.getElementById('biometric-ui').style.borderColor = 'var(--success-green)';
+                document.getElementById('biometric-ui').style.boxShadow = '0 0 50px var(--success-green)';
+                btn.innerText = "VERIFICACIÓN EXITOSA";
+                btn.style.background = 'var(--success-green)';
+            }, 5000);
+
+        } catch (err) {
+            alert("Error: Se requiere cámara para la demo biométrica.");
+        }
+    }
+</script>
+</body>
+</html>
