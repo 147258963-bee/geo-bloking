@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - E-commerce</title>
+    <style>
+        :root {
+            --primary: #004a99;
+            --secondary: #003366;
+            --accent: #ff9900;
+            --light: #f4f4f4;
+            --dark: #333;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--light); }
+
+        /* Header */
+        header { background-color: var(--primary); color: white; padding: 1rem 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .search-container { flex: 1; margin: 0 2rem; min-width: 300px; }
+        .search-container input { width: 100%; padding: 12px; border-radius: 25px; border: none; outline: none; }
+
+        /* Navegación */
+        nav { background-color: var(--secondary); padding: 12px; display: flex; justify-content: center; gap: 20px; }
+        nav button { background: none; border: none; color: white; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        nav button:hover { color: var(--accent); }
+
+        /* Catálogo */
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+
+        /* Tarjeta de Producto */
+        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card-body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-category { font-size: 0.8rem; color: #888; text-transform: uppercase; }
+        .card-title { font-size: 1.1rem; margin: 10px 0; height: 50px; overflow: hidden; }
+        .price { font-size: 1.4rem; color: var(--primary); font-weight: bold; margin-bottom: 1rem; }
+        .btn-add { background: var(--accent); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-add:hover { background: #e68a00; }
+
+        /* Mensaje de no resultados */
+        #no-results { display: none; text-align: center; font-size: 1.2rem; color: #666; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">TECHFACTORY</div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="¿Qué estás buscando hoy?">
+    </div>
+    <div class="cart">🛒 Carrito: <span id="cart-count">0</span></div>
+</header>
+
+<nav>
+    <button onclick="filterProducts('todos')">Todos</button>
+    <button onclick="filterProducts('Notebooks')">Notebooks</button>
+    <button onclick="filterProducts('Componentes')">Componentes</button>
+    <button onclick="filterProducts('Periféricos')">Periféricos</button>
+</nav>
+
+<main class="container">
+    <h2 id="category-title">Todos los productos</h2>
+    <div id="no-results">No se encontraron productos coincidentes.</div>
+    <div class="product-grid" id="productGrid">
+        </div>
+</main>
+
+<script>
+    // 1. Nuestra Base de Datos de productos
+    const products = [
+        { id: 1, name: "Notebook Gamer Razer Blade 15", category: "Notebooks", price: 1450000, img: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=400" },
+        { id: 2, name: "Mouse Logitech G502 Hero", category: "Periféricos", price: 45000, img: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=400" },
+        { id: 3, name: "Tarjeta de Video RTX 4080", category: "Componentes", price: 1100000, img: "https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&w=400" },
+        { id: 4, name: "Teclado Mecánico Corsair K70", category: "Periféricos", price: 120000, img: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=400" },
+        { id: 5, name: "MacBook Air M2", category: "Notebooks", price: 1150000, img: "https://images.unsplash.com/photo-1517336714460-d1b2619dc1fd?auto=format&fit=crop&w=400" },
+        { id: 6, name: "Procesador AMD Ryzen 9", category: "Componentes", price: 480000, img: "https://images.unsplash.com/photo-1591405351990-4726e331f141?auto=format&fit=crop&w=400" }
+    ];
+
+    const grid = document.getElementById('productGrid');
+    const searchInput = document.getElementById('searchInput');
+    const noResults = document.getElementById('no-results');
+    let cartCounter = 0;
+
+    // 2. Función para mostrar productos
+    function displayProducts(filteredList) {
+        grid.innerHTML = '';
+        if (filteredList.length === 0) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+            filteredList.forEach(product => {
+                grid.innerHTML += `
+                    <div class="card">
+                        <img src="${product.img}" alt="${product.name}">
+                        <div class="card-body">
+                            <span class="card-category">${product.category}</span>
+                            <div class="card-title">${product.name}</div>
+                            <div class="price">$${product.price.toLocaleString('es-CL')}</div>
+                            <button class="btn-add" onclick="addToCart()">Agregar al carro</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    }
+
+    // 3. Lógica del Buscador
+    searchInput.addEventListener('input', (e) => {
+        const text = e.target.value.toLowerCase();
+        const filtered = products.filter(p => p.name.toLowerCase().includes(text));
+        displayProducts(filtered);
+    });
+
+    // 4. Lógica de Filtros por Categoría
+    function filterProducts(cat) {
+        document.getElementById('category-title').innerText = cat === 'todos' ? 'Todos los productos' : cat;
+        if (cat === 'todos') {
+            displayProducts(products);
+        } else {
+            const filtered = products.filter(p => p.category === cat);
+            displayProducts(filtered);
+        }
+    }
+
+    // 5. Simular Carrito
+    function addToCart() {
+        cartCounter++;
+        document.getElementById('cart-count').innerText = cartCounter;
+    }
+
+    // Inicializar la página
+    displayProducts(products);
+
+</script>
+</body>
+</html>
